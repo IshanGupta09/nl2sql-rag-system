@@ -1,0 +1,308 @@
+{
+  "timestamp": "2026-03-03T02:06:58.991664",
+  "total": 25,
+  "passed": 25,
+  "failed": 0,
+  "accuracy_pct": 100,
+  "total_time_sec": 60.6,
+  "avg_time_sec": 2.4,
+  "categories": {
+    "Simple SELECT": {
+      "passed": 5,
+      "total": 5
+    },
+    "Filter": {
+      "passed": 5,
+      "total": 5
+    },
+    "Aggregation": {
+      "passed": 5,
+      "total": 5
+    },
+    "JOIN": {
+      "passed": 5,
+      "total": 5
+    },
+    "Date Filter": {
+      "passed": 5,
+      "total": 5
+    }
+  },
+  "results": [
+    {
+      "id": 1,
+      "category": "Simple SELECT",
+      "question": "How many customers are there?",
+      "expected_sql": "SELECT COUNT(*) FROM customers;",
+      "actual_sql": "SELECT COUNT(customer_id) FROM customers;",
+      "passed": true,
+      "reason": "1 row(s) returned",
+      "exec_time": 0.68,
+      "api_error": null
+    },
+    {
+      "id": 2,
+      "category": "Simple SELECT",
+      "question": "List all customers.",
+      "expected_sql": "SELECT * FROM customers;",
+      "actual_sql": "SELECT * FROM customers;",
+      "passed": true,
+      "reason": "Exactly 50 row(s) as expected",
+      "exec_time": 0.55,
+      "api_error": null
+    },
+    {
+      "id": 3,
+      "category": "Simple SELECT",
+      "question": "Show all products.",
+      "expected_sql": "SELECT * FROM products;",
+      "actual_sql": "SELECT * FROM products;",
+      "passed": true,
+      "reason": "Exactly 20 row(s) as expected",
+      "exec_time": 0.58,
+      "api_error": null
+    },
+    {
+      "id": 4,
+      "category": "Simple SELECT",
+      "question": "List all orders.",
+      "expected_sql": "SELECT * FROM orders;",
+      "actual_sql": "SELECT * FROM orders;",
+      "passed": true,
+      "reason": "141 row(s) returned",
+      "exec_time": 0.51,
+      "api_error": null
+    },
+    {
+      "id": 5,
+      "category": "Simple SELECT",
+      "question": "How many products are there?",
+      "expected_sql": "SELECT COUNT(*) FROM products;",
+      "actual_sql": "SELECT COUNT(product_id) FROM products;",
+      "passed": true,
+      "reason": "1 row(s) returned",
+      "exec_time": 0.36,
+      "api_error": null
+    },
+    {
+      "id": 6,
+      "category": "Filter",
+      "question": "List all premium customers.",
+      "expected_sql": "SELECT * FROM customers WHERE customer_type = 'premium';",
+      "actual_sql": "SELECT * FROM customers WHERE customer_type = 'premium';",
+      "passed": true,
+      "reason": "Exactly 20 row(s) as expected",
+      "exec_time": 0.56,
+      "api_error": null
+    },
+    {
+      "id": 7,
+      "category": "Filter",
+      "question": "List all regular customers.",
+      "expected_sql": "SELECT * FROM customers WHERE customer_type = 'regular';",
+      "actual_sql": "SELECT customer_id, name, region, customer_type, signup_date FROM customers WHERE customer_type = 'regular';",
+      "passed": true,
+      "reason": "Exactly 30 row(s) as expected",
+      "exec_time": 0.59,
+      "api_error": null
+    },
+    {
+      "id": 8,
+      "category": "Filter",
+      "question": "List customers from the North region.",
+      "expected_sql": "SELECT * FROM customers WHERE region = 'North';",
+      "actual_sql": "SELECT * FROM customers WHERE region = 'North';",
+      "passed": true,
+      "reason": "Exactly 11 row(s) as expected",
+      "exec_time": 0.68,
+      "api_error": null
+    },
+    {
+      "id": 9,
+      "category": "Filter",
+      "question": "Show products in the Electronics category.",
+      "expected_sql": "SELECT * FROM products WHERE category = 'Electronics';",
+      "actual_sql": "SELECT * FROM products WHERE category = 'Electronics';",
+      "passed": true,
+      "reason": "Exactly 5 row(s) as expected",
+      "exec_time": 0.89,
+      "api_error": null
+    },
+    {
+      "id": 10,
+      "category": "Filter",
+      "question": "Show products in the Books category.",
+      "expected_sql": "SELECT * FROM products WHERE category = 'Books';",
+      "actual_sql": "SELECT * FROM products WHERE category = 'Books';",
+      "passed": true,
+      "reason": "Exactly 6 row(s) as expected",
+      "exec_time": 0.56,
+      "api_error": null
+    },
+    {
+      "id": 11,
+      "category": "Aggregation",
+      "question": "What is the total revenue?",
+      "expected_sql": "SELECT SUM(order_amount) FROM orders;",
+      "actual_sql": "SELECT SUM(order_amount) FROM orders;",
+      "passed": true,
+      "reason": "1 row(s) returned",
+      "exec_time": 1.39,
+      "api_error": null
+    },
+    {
+      "id": 12,
+      "category": "Aggregation",
+      "question": "What is the average order amount?",
+      "expected_sql": "SELECT AVG(order_amount) FROM orders;",
+      "actual_sql": "SELECT AVG(order_amount) FROM orders;",
+      "passed": true,
+      "reason": "1 row(s) returned",
+      "exec_time": 0.65,
+      "api_error": null
+    },
+    {
+      "id": 13,
+      "category": "Aggregation",
+      "question": "What is the highest order amount?",
+      "expected_sql": "SELECT MAX(order_amount) FROM orders;",
+      "actual_sql": "SELECT MAX(order_amount) FROM orders;",
+      "passed": true,
+      "reason": "1 row(s) returned",
+      "exec_time": 1.1,
+      "api_error": null
+    },
+    {
+      "id": 14,
+      "category": "Aggregation",
+      "question": "What is the lowest order amount?",
+      "expected_sql": "SELECT MIN(order_amount) FROM orders;",
+      "actual_sql": "SELECT MIN(order_amount) FROM orders;",
+      "passed": true,
+      "reason": "1 row(s) returned",
+      "exec_time": 0.41,
+      "api_error": null
+    },
+    {
+      "id": 15,
+      "category": "Aggregation",
+      "question": "How many orders were placed in total?",
+      "expected_sql": "SELECT COUNT(*) FROM orders;",
+      "actual_sql": "SELECT COUNT(order_id) FROM orders;",
+      "passed": true,
+      "reason": "1 row(s) returned",
+      "exec_time": 0.75,
+      "api_error": null
+    },
+    {
+      "id": 16,
+      "category": "JOIN",
+      "question": "How many orders did each customer place?",
+      "expected_sql": "SELECT customers.name, COUNT(orders.order_id) FROM customers JOIN orders ON customers.customer_id = orders.customer_id GROUP BY customers.name;",
+      "actual_sql": "SELECT c.customer_id, c.name, COUNT(o.order_id) AS total_orders \nFROM customers c \nLEFT JOIN orders o ON c.customer_id = o.customer_id \nGROUP BY c.customer_id, c.name;",
+      "passed": true,
+      "reason": "Column 'name' present, 50 row(s)",
+      "exec_time": 4.9,
+      "api_error": null
+    },
+    {
+      "id": 17,
+      "category": "JOIN",
+      "question": "Which customer placed the most orders?",
+      "expected_sql": "SELECT customers.name, COUNT(orders.order_id) AS order_count FROM customers JOIN orders ON customers.customer_id = orders.customer_id GROUP BY customers.name ORDER BY order_count DESC LIMIT 1;",
+      "actual_sql": "SELECT c.name FROM customers c JOIN orders o ON c.customer_id = o.customer_id GROUP BY c.name ORDER BY COUNT(o.order_id) DESC LIMIT 1;",
+      "passed": true,
+      "reason": "Exactly 1 row(s) as expected",
+      "exec_time": 4.52,
+      "api_error": null
+    },
+    {
+      "id": 18,
+      "category": "JOIN",
+      "question": "Show total revenue per customer.",
+      "expected_sql": "SELECT customers.name, SUM(orders.order_amount) FROM customers JOIN orders ON customers.customer_id = orders.customer_id GROUP BY customers.name;",
+      "actual_sql": "SELECT c.customer_id, SUM(o.order_amount) AS total_revenue \nFROM customers c \nJOIN orders o ON c.customer_id = o.customer_id \nGROUP BY c.customer_id;",
+      "passed": true,
+      "reason": "Column 'total_revenue' present, 50 row(s)",
+      "exec_time": 4.68,
+      "api_error": null
+    },
+    {
+      "id": 19,
+      "category": "JOIN",
+      "question": "List customers who have placed orders.",
+      "expected_sql": "SELECT DISTINCT customers.name FROM customers JOIN orders ON customers.customer_id = orders.customer_id;",
+      "actual_sql": "SELECT DISTINCT c.customer_id, c.name FROM customers c JOIN orders o ON c.customer_id = o.customer_id;",
+      "passed": true,
+      "reason": "Column 'name' present, 50 row(s)",
+      "exec_time": 4.89,
+      "api_error": null
+    },
+    {
+      "id": 20,
+      "category": "JOIN",
+      "question": "Show top 5 customers by total spend.",
+      "expected_sql": "SELECT customers.name, SUM(orders.order_amount) AS total FROM customers JOIN orders ON customers.customer_id = orders.customer_id GROUP BY customers.name ORDER BY total DESC LIMIT 5;",
+      "actual_sql": "SELECT c.name, SUM(o.order_amount) AS total_spend \nFROM customers c \nJOIN orders o ON c.customer_id = o.customer_id \nGROUP BY c.name \nORDER BY total_spend DESC \nLIMIT 5;",
+      "passed": true,
+      "reason": "Exactly 5 row(s) as expected",
+      "exec_time": 5.4,
+      "api_error": null
+    },
+    {
+      "id": 21,
+      "category": "Date Filter",
+      "question": "How many orders were placed last month?",
+      "expected_sql": "SELECT COUNT(*) FROM orders WHERE strftime('%Y-%m', order_date) = strftime('%Y-%m', date('now','-1 month'));",
+      "actual_sql": "SELECT COUNT(order_id) FROM orders WHERE strftime('%Y-%m', order_date) = strftime('%Y-%m', date('now','-1 month'));",
+      "passed": true,
+      "reason": "1 row(s) returned",
+      "exec_time": 5.73,
+      "api_error": null
+    },
+    {
+      "id": 22,
+      "category": "Date Filter",
+      "question": "How many orders were placed this year?",
+      "expected_sql": "SELECT COUNT(*) FROM orders WHERE strftime('%Y', order_date) = strftime('%Y', date('now'));",
+      "actual_sql": "SELECT COUNT(order_id) FROM orders WHERE strftime('%Y', order_date) = strftime('%Y', date('now'));",
+      "passed": true,
+      "reason": "1 row(s) returned",
+      "exec_time": 5.53,
+      "api_error": null
+    },
+    {
+      "id": 23,
+      "category": "Date Filter",
+      "question": "Show orders placed in the last 30 days.",
+      "expected_sql": "SELECT * FROM orders WHERE order_date >= date('now', '-30 days');",
+      "actual_sql": "SELECT * FROM orders WHERE order_date >= date('now', '-30 days');",
+      "passed": true,
+      "reason": "6 row(s) returned",
+      "exec_time": 5.25,
+      "api_error": null
+    },
+    {
+      "id": 24,
+      "category": "Date Filter",
+      "question": "What is the total revenue this year?",
+      "expected_sql": "SELECT SUM(order_amount) FROM orders WHERE strftime('%Y', order_date) = strftime('%Y', date('now'));",
+      "actual_sql": "SELECT SUM(order_amount) FROM orders WHERE strftime('%Y', order_date) = strftime('%Y', date('now'));",
+      "passed": true,
+      "reason": "1 row(s) returned",
+      "exec_time": 4.56,
+      "api_error": null
+    },
+    {
+      "id": 25,
+      "category": "Date Filter",
+      "question": "How many orders were placed in the last 7 days?",
+      "expected_sql": "SELECT COUNT(*) FROM orders WHERE order_date >= date('now', '-7 days');",
+      "actual_sql": "SELECT COUNT(order_id) FROM orders WHERE order_date >= date('now', '-7 days');",
+      "passed": true,
+      "reason": "1 row(s) returned",
+      "exec_time": 4.78,
+      "api_error": null
+    }
+  ]
+}

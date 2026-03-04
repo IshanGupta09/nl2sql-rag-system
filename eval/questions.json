@@ -1,0 +1,207 @@
+[
+  {
+    "id": 1,
+    "category": "Simple SELECT",
+    "question": "How many customers are there?",
+    "expected_sql": "SELECT COUNT(*) FROM customers;",
+    "result_check": "non_empty",
+    "expected_rows": 1
+  },
+  {
+    "id": 2,
+    "category": "Simple SELECT",
+    "question": "List all customers.",
+    "expected_sql": "SELECT * FROM customers;",
+    "result_check": "exact_row_count",
+    "expected_rows": 50
+  },
+  {
+    "id": 3,
+    "category": "Simple SELECT",
+    "question": "Show all products.",
+    "expected_sql": "SELECT * FROM products;",
+    "result_check": "exact_row_count",
+    "expected_rows": 20
+  },
+  {
+    "id": 4,
+    "category": "Simple SELECT",
+    "question": "List all orders.",
+    "expected_sql": "SELECT * FROM orders;",
+    "result_check": "non_empty",
+    "expected_rows": null
+  },
+  {
+    "id": 5,
+    "category": "Simple SELECT",
+    "question": "How many products are there?",
+    "expected_sql": "SELECT COUNT(*) FROM products;",
+    "result_check": "non_empty",
+    "expected_rows": 1
+  },
+  {
+    "id": 6,
+    "category": "Filter",
+    "question": "List all premium customers.",
+    "expected_sql": "SELECT * FROM customers WHERE customer_type = 'premium';",
+    "result_check": "exact_row_count",
+    "expected_rows": 20,
+    "note": "There are exactly 20 premium customers. Correct SQL returns exactly 20 rows regardless of which columns are selected."
+  },
+  {
+    "id": 7,
+    "category": "Filter",
+    "question": "List all regular customers.",
+    "expected_sql": "SELECT * FROM customers WHERE customer_type = 'regular';",
+    "result_check": "exact_row_count",
+    "expected_rows": 30,
+    "note": "There are exactly 30 regular customers."
+  },
+  {
+    "id": 8,
+    "category": "Filter",
+    "question": "List customers from the North region.",
+    "expected_sql": "SELECT * FROM customers WHERE region = 'North';",
+    "result_check": "exact_row_count",
+    "expected_rows": 11,
+    "note": "There are exactly 11 North customers."
+  },
+  {
+    "id": 9,
+    "category": "Filter",
+    "question": "Show products in the Electronics category.",
+    "expected_sql": "SELECT * FROM products WHERE category = 'Electronics';",
+    "result_check": "exact_row_count",
+    "expected_rows": 5,
+    "note": "There are exactly 5 Electronics products."
+  },
+  {
+    "id": 10,
+    "category": "Filter",
+    "question": "Show products in the Books category.",
+    "expected_sql": "SELECT * FROM products WHERE category = 'Books';",
+    "result_check": "exact_row_count",
+    "expected_rows": 6,
+    "note": "There are exactly 6 Books products."
+  },
+  {
+    "id": 11,
+    "category": "Aggregation",
+    "question": "What is the total revenue?",
+    "expected_sql": "SELECT SUM(order_amount) FROM orders;",
+    "result_check": "non_empty",
+    "expected_rows": 1
+  },
+  {
+    "id": 12,
+    "category": "Aggregation",
+    "question": "What is the average order amount?",
+    "expected_sql": "SELECT AVG(order_amount) FROM orders;",
+    "result_check": "non_empty",
+    "expected_rows": 1
+  },
+  {
+    "id": 13,
+    "category": "Aggregation",
+    "question": "What is the highest order amount?",
+    "expected_sql": "SELECT MAX(order_amount) FROM orders;",
+    "result_check": "non_empty",
+    "expected_rows": 1
+  },
+  {
+    "id": 14,
+    "category": "Aggregation",
+    "question": "What is the lowest order amount?",
+    "expected_sql": "SELECT MIN(order_amount) FROM orders;",
+    "result_check": "non_empty",
+    "expected_rows": 1
+  },
+  {
+    "id": 15,
+    "category": "Aggregation",
+    "question": "How many orders were placed in total?",
+    "expected_sql": "SELECT COUNT(*) FROM orders;",
+    "result_check": "non_empty",
+    "expected_rows": 1
+  },
+  {
+    "id": 16,
+    "category": "JOIN",
+    "question": "How many orders did each customer place?",
+    "expected_sql": "SELECT customers.name, COUNT(orders.order_id) FROM customers JOIN orders ON customers.customer_id = orders.customer_id GROUP BY customers.name;",
+    "result_check": "has_column",
+    "expected_column": "name"
+  },
+  {
+    "id": 17,
+    "category": "JOIN",
+    "question": "Which customer placed the most orders?",
+    "expected_sql": "SELECT customers.name, COUNT(orders.order_id) AS order_count FROM customers JOIN orders ON customers.customer_id = orders.customer_id GROUP BY customers.name ORDER BY order_count DESC LIMIT 1;",
+    "result_check": "exact_row_count",
+    "expected_rows": 1
+  },
+  {
+    "id": 18,
+    "category": "JOIN",
+    "question": "Show total revenue per customer.",
+    "expected_sql": "SELECT customers.name, SUM(orders.order_amount) FROM customers JOIN orders ON customers.customer_id = orders.customer_id GROUP BY customers.name;",
+    "result_check": "has_column",
+    "expected_column": "total_revenue"
+  },
+  {
+    "id": 19,
+    "category": "JOIN",
+    "question": "List customers who have placed orders.",
+    "expected_sql": "SELECT DISTINCT customers.name FROM customers JOIN orders ON customers.customer_id = orders.customer_id;",
+    "result_check": "has_column",
+    "expected_column": "name"
+  },
+  {
+    "id": 20,
+    "category": "JOIN",
+    "question": "Show top 5 customers by total spend.",
+    "expected_sql": "SELECT customers.name, SUM(orders.order_amount) AS total FROM customers JOIN orders ON customers.customer_id = orders.customer_id GROUP BY customers.name ORDER BY total DESC LIMIT 5;",
+    "result_check": "exact_row_count",
+    "expected_rows": 5
+  },
+  {
+    "id": 21,
+    "category": "Date Filter",
+    "question": "How many orders were placed last month?",
+    "expected_sql": "SELECT COUNT(*) FROM orders WHERE strftime('%Y-%m', order_date) = strftime('%Y-%m', date('now','-1 month'));",
+    "result_check": "non_empty",
+    "expected_rows": 1
+  },
+  {
+    "id": 22,
+    "category": "Date Filter",
+    "question": "How many orders were placed this year?",
+    "expected_sql": "SELECT COUNT(*) FROM orders WHERE strftime('%Y', order_date) = strftime('%Y', date('now'));",
+    "result_check": "non_empty",
+    "expected_rows": 1
+  },
+  {
+    "id": 23,
+    "category": "Date Filter",
+    "question": "Show orders placed in the last 30 days.",
+    "expected_sql": "SELECT * FROM orders WHERE order_date >= date('now', '-30 days');",
+    "result_check": "non_empty",
+    "expected_rows": null
+  },
+  {
+    "id": 24,
+    "category": "Date Filter",
+    "question": "What is the total revenue this year?",
+    "expected_sql": "SELECT SUM(order_amount) FROM orders WHERE strftime('%Y', order_date) = strftime('%Y', date('now'));",
+    "result_check": "non_empty",
+    "expected_rows": 1
+  },
+  {
+    "id": 25,
+    "category": "Date Filter",
+    "question": "How many orders were placed in the last 7 days?",
+    "expected_sql": "SELECT COUNT(*) FROM orders WHERE order_date >= date('now', '-7 days');",
+    "result_check": "non_empty",
+    "expected_rows": 1
+  }
+]

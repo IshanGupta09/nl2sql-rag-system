@@ -1,0 +1,61 @@
+BUSINESS DOMAIN: E-COMMERCE ANALYTICS
+
+----------------------------------
+CUSTOMER DEFINITIONS
+----------------------------------
+
+Premium Customer:
+- A customer is considered premium if customer_type = 'premium' in the customers table.
+
+Regular Customer:
+- A customer is considered regular if customer_type = 'regular'.
+
+Churned Customer:
+- A customer is considered churned if they have NOT placed any order in the last 90 days.
+- Order activity is determined using the orders.order_date column.
+
+----------------------------------
+TIME DEFINITIONS
+----------------------------------
+
+Last Month:
+- Refers to the previous calendar month from today.
+
+Last Quarter:
+- Refers to the previous 3 months from today.
+
+----------------------------------
+METRIC DEFINITIONS
+----------------------------------
+
+Revenue:
+- Revenue is calculated as the SUM of orders.order_amount.
+
+Total Orders:
+- Total orders refers to COUNT of order_id in the orders table.
+
+Average Order Value (AOV):
+- AOV is calculated as total revenue divided by total number of orders.
+
+----------------------------------
+JOIN RULES
+----------------------------------
+
+Customer to Orders Join:
+- customers.customer_id = orders.customer_id
+
+Orders to Order Items Join:
+- orders.order_id = order_items.order_id
+
+Order Items to Products Join:
+- order_items.product_id = products.product_id
+
+----------------------------------
+FILTERING RULES
+----------------------------------
+
+Region-based Analysis:
+- Region information is stored in customers.region.
+
+Category-based Analysis:
+- Product category information is stored in products.category.

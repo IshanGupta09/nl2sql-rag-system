@@ -1,0 +1,248 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1080" width="900" height="1080">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#04040f"/>
+      <stop offset="100%" style="stop-color:#0c0c2a"/>
+    </linearGradient>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4ff"/>
+      <stop offset="50%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#f472b6"/>
+    </linearGradient>
+    <linearGradient id="userGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="ragGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="llmGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f472b6;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="dbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="nlgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="uiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:0.12"/>
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.08"/>
+    </linearGradient>
+    <marker id="arrowCyan" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#00d4ff"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8b5cf6"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#10b981"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#fbbf24"/>
+    </marker>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="1080" fill="url(#bgGrad)" rx="16"/>
+  <pattern id="dots" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="rgba(0,212,255,0.06)"/>
+  </pattern>
+  <rect width="900" height="1080" fill="url(#dots)" rx="16"/>
+
+  <!-- Top bar -->
+  <rect x="0" y="0" width="900" height="6" fill="url(#headerGrad)" rx="4"/>
+
+  <!-- Title -->
+  <text x="450" y="46" text-anchor="middle" font-family="monospace" font-size="21" font-weight="bold" fill="#ffffff" filter="url(#softglow)">⚡ NL2SQL RAG System — Architecture</text>
+  <text x="450" y="66" text-anchor="middle" font-family="monospace" font-size="11" fill="#64748b">Plain English → SQL → Human-readable Answer  ·  ~2 seconds end-to-end</text>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- STEP 1: USER INPUT -->
+  <!-- ═══════════════════════════════ -->
+  <rect x="250" y="85" width="400" height="72" rx="12" fill="url(#userGrad)" stroke="#00d4ff" stroke-width="1.5"/>
+  <rect x="250" y="85" width="4" height="72" rx="2" fill="#00d4ff"/>
+  <!-- Step badge -->
+  <rect x="258" y="92" width="90" height="16" rx="4" fill="rgba(0,212,255,0.2)"/>
+  <text x="303" y="104" text-anchor="middle" font-family="monospace" font-size="9" fill="#00d4ff" font-weight="bold">STEP 1  ·  INPUT</text>
+  <text x="450" y="128" text-anchor="middle" font-family="monospace" font-size="13" fill="#e2e8f0" font-style="italic">"Which customer placed the most</text>
+  <text x="450" y="146" text-anchor="middle" font-family="monospace" font-size="13" fill="#e2e8f0" font-style="italic">orders last month?"</text>
+
+  <!-- Arrow down -->
+  <line x1="450" y1="157" x2="450" y2="176" stroke="#00d4ff" stroke-width="2" marker-end="url(#arrowCyan)"/>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- STEP 2: TWO PARALLEL BOXES -->
+  <!-- ═══════════════════════════════ -->
+
+  <!-- RAG Retriever -->
+  <rect x="60" y="180" width="355" height="112" rx="12" fill="url(#ragGrad)" stroke="#8b5cf6" stroke-width="1.5"/>
+  <rect x="60" y="180" width="4" height="112" rx="2" fill="#8b5cf6"/>
+  <rect x="68" y="187" width="145" height="16" rx="4" fill="rgba(139,92,246,0.25)"/>
+  <text x="140" y="199" text-anchor="middle" font-family="monospace" font-size="9" fill="#a78bfa" font-weight="bold">STEP 2a  ·  RAG RETRIEVER</text>
+  <text x="80" y="220" font-family="monospace" font-size="11" fill="#c4b5fd">🔍  FAISS Vectorstore Search</text>
+  <text x="80" y="238" font-family="monospace" font-size="10" fill="#94a3b8">    all-MiniLM-L6-v2 embeddings</text>
+  <text x="80" y="256" font-family="monospace" font-size="11" fill="#c4b5fd">📄  business_rules.txt → top-k chunks</text>
+  <text x="80" y="274" font-family="monospace" font-size="10" fill="#64748b" font-style="italic">    Injects domain knowledge into prompt</text>
+
+  <!-- Schema Builder -->
+  <rect x="485" y="180" width="355" height="112" rx="12" fill="url(#ragGrad)" stroke="#8b5cf6" stroke-width="1.5"/>
+  <rect x="485" y="180" width="4" height="112" rx="2" fill="#8b5cf6"/>
+  <rect x="493" y="187" width="152" height="16" rx="4" fill="rgba(139,92,246,0.25)"/>
+  <text x="569" y="199" text-anchor="middle" font-family="monospace" font-size="9" fill="#a78bfa" font-weight="bold">STEP 2b  ·  SCHEMA BUILDER</text>
+  <text x="505" y="220" font-family="monospace" font-size="11" fill="#c4b5fd">🗄️  Auto-discovers tables + columns</text>
+  <text x="505" y="238" font-family="monospace" font-size="10" fill="#94a3b8">    Samples TEXT values for accuracy</text>
+  <text x="505" y="256" font-family="monospace" font-size="11" fill="#c4b5fd">📅  Date phrase → SQLite expression</text>
+  <text x="505" y="274" font-family="monospace" font-size="10" fill="#64748b" font-style="italic">    "last month" → strftime('%Y-%m',...)</text>
+
+  <!-- Arrows: step1 → step2a and step2b -->
+  <path d="M 390 157 Q 237 168 237 180" stroke="#8b5cf6" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arrowPurple)"/>
+  <path d="M 510 157 Q 663 168 663 180" stroke="#8b5cf6" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arrowPurple)"/>
+
+  <!-- Labels on dashed arrows -->
+  <text x="280" y="166" font-family="monospace" font-size="9" fill="#64748b">question</text>
+  <text x="580" y="166" font-family="monospace" font-size="9" fill="#64748b">question + db path</text>
+
+  <!-- Converging arrows to step 3 -->
+  <path d="M 237 292 Q 237 338 380 352" stroke="#8b5cf6" stroke-width="1.5" fill="none" marker-end="url(#arrowPurple)"/>
+  <path d="M 663 292 Q 663 338 520 352" stroke="#8b5cf6" stroke-width="1.5" fill="none" marker-end="url(#arrowPurple)"/>
+  <text x="92" y="325" font-family="monospace" font-size="9" fill="#64748b">context chunks</text>
+  <text x="600" y="325" font-family="monospace" font-size="9" fill="#64748b">schema + date hints</text>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- STEP 3: SQL GENERATOR -->
+  <!-- ═══════════════════════════════ -->
+  <rect x="60" y="356" width="780" height="168" rx="12" fill="url(#llmGrad)" stroke="#f472b6" stroke-width="1.5"/>
+  <rect x="60" y="356" width="4" height="168" rx="2" fill="#f472b6"/>
+  <rect x="68" y="363" width="180" height="16" rx="4" fill="rgba(244,114,182,0.25)"/>
+  <text x="158" y="375" text-anchor="middle" font-family="monospace" font-size="9" fill="#f9a8d4" font-weight="bold">STEP 3  ·  GROQ LLM — SQL GENERATOR</text>
+
+  <!-- Model tags -->
+  <rect x="68" y="383" width="195" height="18" rx="4" fill="rgba(244,114,182,0.15)" stroke="rgba(244,114,182,0.35)" stroke-width="1"/>
+  <text x="165" y="396" text-anchor="middle" font-family="monospace" font-size="9" fill="#f9a8d4">🤖  Llama 3.3 70B Versatile</text>
+  <rect x="272" y="383" width="120" height="18" rx="4" fill="rgba(100,116,139,0.2)" stroke="rgba(100,116,139,0.3)" stroke-width="1"/>
+  <text x="332" y="396" text-anchor="middle" font-family="monospace" font-size="9" fill="#94a3b8">temperature = 0</text>
+  <rect x="400" y="383" width="120" height="18" rx="4" fill="rgba(100,116,139,0.2)" stroke="rgba(100,116,139,0.3)" stroke-width="1"/>
+  <text x="460" y="396" text-anchor="middle" font-family="monospace" font-size="9" fill="#94a3b8">max_tokens = 300</text>
+  <rect x="528" y="383" width="165" height="18" rx="4" fill="rgba(16,185,129,0.12)" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
+  <text x="610" y="396" text-anchor="middle" font-family="monospace" font-size="9" fill="#34d399">✅  deterministic output</text>
+
+  <!-- SQL code block -->
+  <rect x="68" y="407" width="764" height="106" rx="8" fill="rgba(0,0,10,0.85)" stroke="rgba(244,114,182,0.2)" stroke-width="1"/>
+  <text x="88" y="428" font-family="monospace" font-size="11.5" fill="#f9a8d4">SELECT</text>
+  <text x="147" y="428" font-family="monospace" font-size="11.5" fill="#e2e8f0">c.name,  COUNT(o.order_id)  AS order_count</text>
+  <text x="88" y="446" font-family="monospace" font-size="11.5" fill="#f9a8d4">FROM</text>
+  <text x="130" y="446" font-family="monospace" font-size="11.5" fill="#e2e8f0">customers c</text>
+  <text x="88" y="464" font-family="monospace" font-size="11.5" fill="#f9a8d4">JOIN</text>
+  <text x="122" y="464" font-family="monospace" font-size="11.5" fill="#e2e8f0">orders o  ON  c.customer_id = o.customer_id</text>
+  <text x="88" y="482" font-family="monospace" font-size="11.5" fill="#f9a8d4">WHERE</text>
+  <text x="135" y="482" font-family="monospace" font-size="11.5" fill="#7dd3fc">strftime('%Y-%m', o.order_date) = strftime('%Y-%m', date('now', '-1 month'))</text>
+  <text x="88" y="500" font-family="monospace" font-size="11.5" fill="#f9a8d4">GROUP BY</text>
+  <text x="163" y="500" font-family="monospace" font-size="11.5" fill="#e2e8f0">c.name   </text>
+  <text x="88" y="500" font-family="monospace" font-size="11.5" fill="#f9a8d4"/>
+  <text x="88" y="500" font-family="monospace" font-size="11.5" fill="#f9a8d4"/>
+  <text x="290" y="500" font-family="monospace" font-size="11.5" fill="#f9a8d4">ORDER BY</text>
+  <text x="365" y="500" font-family="monospace" font-size="11.5" fill="#e2e8f0">order_count DESC   </text>
+  <text x="530" y="500" font-family="monospace" font-size="11.5" fill="#f9a8d4">LIMIT</text>
+  <text x="573" y="500" font-family="monospace" font-size="11.5" fill="#fbbf24">1</text>
+  <text x="585" y="500" font-family="monospace" font-size="11.5" fill="#f9a8d4">;</text>
+
+  <!-- Arrows from step 3 split -->
+  <line x1="280" y1="524" x2="210" y2="555" stroke="#10b981" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="620" y1="524" x2="690" y2="555" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowCyan)"/>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- SAFE / ERROR BOXES -->
+  <!-- ═══════════════════════════════ -->
+  <rect x="60" y="558" width="295" height="56" rx="10" fill="rgba(16,185,129,0.1)" stroke="#10b981" stroke-width="1.5"/>
+  <text x="207" y="581" text-anchor="middle" font-family="monospace" font-size="12" fill="#34d399" font-weight="bold">✅  SAFE SQL</text>
+  <text x="207" y="599" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">SELECT only  ·  no DROP / DELETE / ALTER</text>
+
+  <rect x="545" y="558" width="295" height="56" rx="10" fill="rgba(239,68,68,0.08)" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="692" y="581" text-anchor="middle" font-family="monospace" font-size="12" fill="#fca5a5" font-weight="bold">❌  ERROR / UNSAFE</text>
+  <text x="692" y="599" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">Auto-corrects prompt → retries once  🔁</text>
+
+  <!-- Arrows from safe/error to executor -->
+  <path d="M 207 614 Q 207 650 370 664" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+  <path d="M 692 614 Q 692 650 530 664" stroke="#10b981" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arrowGreen)"/>
+  <text x="88" y="648" font-family="monospace" font-size="9" fill="#64748b">execute query</text>
+  <text x="610" y="648" font-family="monospace" font-size="9" fill="#64748b">retry with correction</text>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- STEP 4: SQLITE EXECUTOR -->
+  <!-- ═══════════════════════════════ -->
+  <rect x="60" y="668" width="780" height="76" rx="12" fill="url(#dbGrad)" stroke="#10b981" stroke-width="1.5"/>
+  <rect x="60" y="668" width="4" height="76" rx="2" fill="#10b981"/>
+  <rect x="68" y="675" width="170" height="16" rx="4" fill="rgba(16,185,129,0.25)"/>
+  <text x="153" y="687" text-anchor="middle" font-family="monospace" font-size="9" fill="#6ee7b7" font-weight="bold">STEP 4  ·  SQLITE EXECUTOR</text>
+  <text x="80" y="708" font-family="monospace" font-size="11" fill="#6ee7b7">🗄️  Runs SELECT against chosen DB  </text>
+  <text x="80" y="726" font-family="monospace" font-size="11" fill="#94a3b8">    Returns → </text>
+  <text x="165" y="726" font-family="monospace" font-size="11" fill="#7dd3fc">[{"name": "Alice",  "order_count": 12}]</text>
+  <!-- Multi-DB badge -->
+  <rect x="580" y="698" width="245" height="32" rx="6" fill="rgba(0,212,255,0.08)" stroke="rgba(0,212,255,0.25)" stroke-width="1"/>
+  <text x="702" y="709" text-anchor="middle" font-family="monospace" font-size="9" fill="#00d4ff">🗄️  Multi-Database Support</text>
+  <text x="702" y="723" text-anchor="middle" font-family="monospace" font-size="9" fill="#64748b">Upload any SQLite .db file</text>
+
+  <!-- Arrow 4→5 -->
+  <line x1="450" y1="744" x2="450" y2="763" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrowAmber)"/>
+  <text x="460" y="758" font-family="monospace" font-size="9" fill="#64748b">rows (JSON)</text>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- STEP 5: ANSWER GENERATOR -->
+  <!-- ═══════════════════════════════ -->
+  <rect x="60" y="767" width="780" height="90" rx="12" fill="url(#nlgGrad)" stroke="#fbbf24" stroke-width="1.5"/>
+  <rect x="60" y="767" width="4" height="90" rx="2" fill="#fbbf24"/>
+  <rect x="68" y="774" width="215" height="16" rx="4" fill="rgba(251,191,36,0.25)"/>
+  <text x="175" y="786" text-anchor="middle" font-family="monospace" font-size="9" fill="#fde68a" font-weight="bold">STEP 5  ·  GROQ LLM — ANSWER GENERATOR</text>
+  <rect x="68" y="796" width="195" height="16" rx="4" fill="rgba(251,191,36,0.12)" stroke="rgba(251,191,36,0.3)" stroke-width="1"/>
+  <text x="165" y="808" text-anchor="middle" font-family="monospace" font-size="9" fill="#fde68a">🤖  Llama 3.3 70B  ·  max_tokens=120</text>
+  <!-- Output -->
+  <rect x="68" y="820" width="764" height="28" rx="6" fill="rgba(0,0,10,0.7)" stroke="rgba(251,191,36,0.2)" stroke-width="1"/>
+  <text x="450" y="839" text-anchor="middle" font-family="monospace" font-size="12.5" fill="#fde68a" font-style="italic">"Alice placed the most orders last month with 12 orders."</text>
+
+  <!-- Arrow 5→6 -->
+  <line x1="450" y1="857" x2="450" y2="876" stroke="#00d4ff" stroke-width="2" marker-end="url(#arrowCyan)"/>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- STEP 6: STREAMLIT UI -->
+  <!-- ═══════════════════════════════ -->
+  <rect x="60" y="880" width="780" height="150" rx="12" fill="url(#uiGrad)" stroke="#00d4ff" stroke-width="1.5"/>
+  <rect x="60" y="880" width="4" height="150" rx="2" fill="url(#headerGrad)"/>
+  <rect x="68" y="887" width="190" height="16" rx="4" fill="rgba(0,212,255,0.2)"/>
+  <text x="163" y="899" text-anchor="middle" font-family="monospace" font-size="9" fill="#7dd3fc" font-weight="bold">STEP 6  ·  STREAMLIT UI  —  CYBERPUNK</text>
+
+  <!-- 3 top cards -->
+  <rect x="68" y="910" width="232" height="48" rx="8" fill="rgba(0,212,255,0.07)" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+  <text x="184" y="930" text-anchor="middle" font-family="monospace" font-size="10" fill="#00d4ff" font-weight="bold">💬  Answer Card</text>
+  <text x="184" y="948" text-anchor="middle" font-family="monospace" font-size="9" fill="#64748b">Plain English result sentence</text>
+
+  <rect x="314" y="910" width="232" height="48" rx="8" fill="rgba(139,92,246,0.07)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+  <text x="430" y="930" text-anchor="middle" font-family="monospace" font-size="10" fill="#a78bfa" font-weight="bold">{ }  SQL Toggle</text>
+  <text x="430" y="948" text-anchor="middle" font-family="monospace" font-size="9" fill="#64748b">View / hide generated SQL</text>
+
+  <rect x="560" y="910" width="272" height="48" rx="8" fill="rgba(244,114,182,0.07)" stroke="rgba(244,114,182,0.3)" stroke-width="1"/>
+  <text x="696" y="930" text-anchor="middle" font-family="monospace" font-size="10" fill="#f9a8d4" font-weight="bold">▤  Results Table</text>
+  <text x="696" y="948" text-anchor="middle" font-family="monospace" font-size="9" fill="#64748b">Full dataset  ·  CSV export ⬇️</text>
+
+  <!-- 3 bottom cards -->
+  <rect x="68" y="966" width="232" height="40" rx="8" fill="rgba(16,185,129,0.07)" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
+  <text x="184" y="991" text-anchor="middle" font-family="monospace" font-size="10" fill="#34d399">👍 👎  Feedback Rating</text>
+
+  <rect x="314" y="966" width="232" height="40" rx="8" fill="rgba(251,191,36,0.07)" stroke="rgba(251,191,36,0.3)" stroke-width="1"/>
+  <text x="430" y="991" text-anchor="middle" font-family="monospace" font-size="10" fill="#fde68a">📊  Session Stats</text>
+
+  <rect x="560" y="966" width="272" height="40" rx="8" fill="rgba(100,116,139,0.07)" stroke="rgba(100,116,139,0.3)" stroke-width="1"/>
+  <text x="696" y="991" text-anchor="middle" font-family="monospace" font-size="10" fill="#94a3b8">🕐  Query History</text>
+
+  <!-- Footer -->
+  <text x="450" y="1060" text-anchor="middle" font-family="monospace" font-size="10" fill="#334155">Built by Ishan Gupta  ·  github.com/IshanGupta09  ·  nl2sql-rag.streamlit.app</text>
+  <rect x="0" y="1074" width="900" height="6" fill="url(#headerGrad)" rx="4"/>
+</svg>

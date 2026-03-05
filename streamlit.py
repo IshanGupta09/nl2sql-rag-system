@@ -414,7 +414,9 @@ for k, v in {
     "active_db_name":   "🗄️ Demo — ecommerce.db",
     "db_tables":        [],
     "query_count":      0,
-    "uploaded_db_path": None,
+    "uploaded_db_path":   None,
+    "show_schema":        False,
+    "last_uploaded_name": None,
 }.items():
     if k not in st.session_state:
         st.session_state[k] = v
@@ -637,23 +639,26 @@ with st.sidebar:
                                    help="Upload any SQLite .db file to query with natural language")
 
     if uploaded_db is not None:
-        with st.spinner("Reading schema..."):
-            try:
-                tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".db")
-                tmp.write(uploaded_db.getvalue()); tmp.flush(); tmp.close()
-                tables = get_table_info(tmp.name)
-                get_schema(tmp.name)
-                if st.session_state.get("uploaded_db_path"):
-                    try: Path(st.session_state["uploaded_db_path"]).unlink(missing_ok=True)
-                    except Exception: pass
-                st.session_state["active_db"]        = tmp.name
-                st.session_state["active_db_name"]   = f"📂 {uploaded_db.name}"
-                st.session_state["db_tables"]        = tables
-                st.session_state["uploaded_db_path"] = tmp.name
-                st.session_state["last_response"]    = None
-                st.success(f"✓ Loaded: {uploaded_db.name}"); st.rerun()
-            except Exception as e:
-                st.error(f"Invalid SQLite file: {e}")
+        # Only process if it's a newly uploaded file
+        if uploaded_db.name != st.session_state.get("last_uploaded_name"):
+            with st.spinner("Reading schema..."):
+                try:
+                    tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".db")
+                    tmp.write(uploaded_db.getvalue()); tmp.flush(); tmp.close()
+                    tables = get_table_info(tmp.name)
+                    get_schema(tmp.name)
+                    if st.session_state.get("uploaded_db_path"):
+                        try: Path(st.session_state["uploaded_db_path"]).unlink(missing_ok=True)
+                        except Exception: pass
+                    st.session_state["active_db"]          = tmp.name
+                    st.session_state["active_db_name"]     = f"📂 {uploaded_db.name}"
+                    st.session_state["db_tables"]          = tables
+                    st.session_state["uploaded_db_path"]   = tmp.name
+                    st.session_state["last_uploaded_name"] = uploaded_db.name
+                    st.session_state["last_response"]      = None
+                    st.session_state["show_schema"]        = True
+                except Exception as e:
+                    st.error(f"Invalid SQLite file: {e}")
 
     if st.session_state["active_db"] != DEFAULT_DB:
         if st.button("↩  Use Demo Database", use_container_width=True):
@@ -661,7 +666,12 @@ with st.sidebar:
                                      "db_tables":[],"last_response":None}); st.rerun()
 
     if st.session_state.get("db_tables"):
-        with st.expander("📋 View Schema"):
+        def _toggle_schema():
+            st.session_state["show_schema"] = not st.session_state["show_schema"]
+        schema_label = "▲  Hide Schema" if st.session_state["show_schema"] else "▼  View Schema"
+        st.button(schema_label, key="schema_toggle", on_click=_toggle_schema,
+                  use_container_width=True)
+        if st.session_state["show_schema"]:
             for tbl in st.session_state["db_tables"]:
                 col_names = ", ".join(c["name"] for c in tbl["columns"])
                 st.markdown(f"""<div style="margin-bottom:10px">
